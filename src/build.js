@@ -5,6 +5,7 @@ const pug = require('pug');
 const fs = require('fs-extra');
 const path = require('path');
 const commonmark = require('commonmark');
+const matter = require('gray-matter');
 
 // Paths
 const srcDir = path.join(__dirname);
@@ -30,7 +31,10 @@ const writer = new commonmark.HtmlRenderer();
 
 postFiles.forEach(file => {
   const mdPath = path.join(postsSrcDir, file);
-  const mdContent = fs.readFileSync(mdPath, 'utf8');
+  const mdRaw = fs.readFileSync(mdPath, 'utf8');
+  const mdParsed = matter(mdRaw);
+  const mdContent = mdParsed.content; // Markdown without front matter
+  // You can access front matter via mdParsed.data
   const parsed = reader.parse(mdContent);
   const htmlContent = writer.render(parsed);
   const outPath = path.join(postsOutDir, file.replace(/\.md$/, '.html'));
