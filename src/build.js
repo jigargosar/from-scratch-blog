@@ -16,11 +16,6 @@ const indexHtml = path.join(outDir, 'index.html');
 // Ensure output directory exists
 fs.ensureDirSync(outDir);
 
-// Compile index.pug to HTML
-const html = pug.renderFile(indexPug, { pretty: true });
-fs.writeFileSync(indexHtml, html);
-console.log('index.pug processed and index.html generated in docs/');
-
 // Markdown to HTML for posts
 const postsSrcDir = path.join(srcDir, 'posts');
 const postsOutDir = path.join(outDir, 'posts');
@@ -28,6 +23,8 @@ fs.ensureDirSync(postsOutDir);
 const postFiles = fs.readdirSync(postsSrcDir).filter(f => f.endsWith('.md'));
 const reader = new commonmark.Parser();
 const writer = new commonmark.HtmlRenderer();
+
+const postsMeta = [];
 
 postFiles.forEach(file => {
   const mdPath = path.join(postsSrcDir, file);
@@ -37,9 +34,19 @@ postFiles.forEach(file => {
   // You can access front matter via mdParsed.data
   const parsed = reader.parse(mdContent);
   const htmlContent = writer.render(parsed);
-  const outPath = path.join(postsOutDir, file.replace(/\.md$/, '.html'));
+  const outFile = file.replace(/\.md$/, '.html');
+  const outPath = path.join(postsOutDir, outFile);
   fs.writeFileSync(outPath, htmlContent);
+  postsMeta.push({
+    title: mdParsed.data.title || outFile,
+    url: 'posts/' + outFile
+  });
   console.log(`${file} converted to HTML in docs/posts.`);
 });
+
+// Compile index.pug to HTML with dynamic posts
+const html = pug.renderFile(indexPug, { pretty: true, posts: postsMeta });
+fs.writeFileSync(indexHtml, html);
+console.log('index.pug processed and index.html generated in docs/');
 
 console.log('Build script ready. Add your build logic here.');
