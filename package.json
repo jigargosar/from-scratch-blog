@@ -1,0 +1,19 @@
+{
+  "name": "from-scratch-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.13.1",
+  "devDependencies": {
+    "commonmark": "^0.31.2",
+    "fs-extra": "^11.3.0",
+    "js-yaml": "^4.1.0",
+    "pug": "^3.0.3"
+  }
+}
