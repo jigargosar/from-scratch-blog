@@ -30,18 +30,31 @@ postFiles.forEach(file => {
   const mdPath = path.join(postsSrcDir, file);
   const mdRaw = fs.readFileSync(mdPath, 'utf8');
   const mdParsed = matter(mdRaw);
-  const mdContent = mdParsed.content; // Markdown without front matter
-  // You can access front matter via mdParsed.data
+  const mdContent = mdParsed.content;
   const parsed = reader.parse(mdContent);
   const htmlContent = writer.render(parsed);
   const outFile = file.replace(/\.md$/, '.html');
   const outPath = path.join(postsOutDir, outFile);
-  fs.writeFileSync(outPath, htmlContent);
+
+  // Determine layout
+  let layoutFile = mdParsed.data.layout ? path.join(srcDir, mdParsed.data.layout) : path.join(srcDir, 'post.pug');
+  if (!fs.existsSync(layoutFile)) {
+    console.warn(`Layout file ${layoutFile} not found. Using default post.pug.`);
+    layoutFile = path.join(srcDir, 'post.pug');
+  }
+
+  // Render with layout
+  const postHtml = pug.renderFile(layoutFile, {
+    pretty: true,
+    postHtml: htmlContent,
+    title: mdParsed.data.title || outFile
+  });
+  fs.writeFileSync(outPath, postHtml);
   postsMeta.push({
     title: mdParsed.data.title || outFile,
     url: 'posts/' + outFile
   });
-  console.log(`${file} converted to HTML in docs/posts.`);
+  console.log(`${file} converted to HTML in docs/posts using ${path.basename(layoutFile)}.`);
 });
 
 // Compile index.pug to HTML with dynamic posts
