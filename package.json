@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "pnpx serve docs",
-    "watch": "pnpx nodemon --watch src --ext js,pug,md --exec node src/build.js"
+    "serve": "pnpx serve docs",
+    "watch": "pnpx nodemon --watch src --ext js,pug,md --exec node src/build.js",
+    "dev": "concurrently \"pnpm run watch\" \"pnpm run serve\""
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,7 @@
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "commonmark": "^0.31.2",
+    "concurrently": "^9.2.0",
     "fs-extra": "^11.3.0",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
