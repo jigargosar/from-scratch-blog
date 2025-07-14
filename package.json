@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "pnpx nodemon --watch src --ext js,pug,md --exec node src/build.js",
-    "sync": "browser-sync start --server \"docs\" --files \"docs/**/*\" --no-notify --no-ui",
-    "dev": "concurrently --prefix-colors \"blueBright,greenBright\" \"pnpm run watch\" \"pnpm run sync\""
+    "watch": "nodemon --watch src --ext css,js,pug,md --exec node src/build.js",
+    "sync": "browser-sync start --config .bs-config.js",
+    "dev": "concurrently --prefix-colors \"blueBright,greenBright\" \"npm run watch\" \"npm run sync\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.13.1",
+  "packageManager": "npm@11.4.2",
   "devDependencies": {
     "browser-sync": "^3.0.4",
     "commonmark": "^0.31.2",
