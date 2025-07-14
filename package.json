@@ -4,15 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serve": "pnpx serve docs",
     "watch": "pnpx nodemon --watch src --ext js,pug,md --exec node src/build.js",
-    "dev": "concurrently --prefix-colors \"blueBright,yellowBright\" \"pnpm run watch\" \"pnpm run serve\""
+    "sync": "browser-sync start --server \"docs\" --files \"docs/**/*\" --no-notify --no-ui",
+    "dev": "concurrently --prefix-colors \"blueBright,greenBright\" \"pnpm run watch\" \"pnpm run sync\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
+    "browser-sync": "^3.0.4",
     "commonmark": "^0.31.2",
     "concurrently": "^9.2.0",
     "fs-extra": "^11.3.0",
