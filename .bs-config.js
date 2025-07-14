@@ -10,7 +10,7 @@ module.exports = {
   notify: true,
   ui: false,
   open: true,
-  ghostMode: true,
+  ghostMode: false,
   logPrefix: "🛠 Blog",
   historyApiFallback: false,
 };
