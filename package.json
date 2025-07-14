@@ -6,8 +6,7 @@
   "scripts": {
     "serve": "pnpx serve docs",
     "watch": "pnpx nodemon --watch src --ext js,pug,md --exec node src/build.js",
-    "dev": "concurrently --prefix-colors \"blueBright,yellowBright\" \"pnpm run watch\" \"pnpm run serve\"",
-    "vite": "vite"
+    "dev": "concurrently --prefix-colors \"blueBright,yellowBright\" \"pnpm run watch\" \"pnpm run serve\""
   },
   "keywords": [],
   "author": "",
@@ -21,9 +20,6 @@
     "js-yaml": "^4.1.0",
     "nodemon": "^3.1.10",
     "pug": "^3.0.3",
-    "serve": "^14.2.4",
-    "tachyons": "^4.12.0",
-    "vite": "^7.0.4",
-    "vite-plugin-run": "^0.6.1"
+    "serve": "^14.2.4"
   }
 }
