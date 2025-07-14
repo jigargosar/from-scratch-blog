@@ -6,7 +6,8 @@
   "scripts": {
     "serve": "pnpx serve docs",
     "watch": "pnpx nodemon --watch src --ext js,pug,md --exec node src/build.js",
-    "dev": "concurrently --prefix-colors \"blueBright,yellowBright\" \"pnpm run watch\" \"pnpm run serve\""
+    "dev": "concurrently --prefix-colors \"blueBright,yellowBright\" \"pnpm run watch\" \"pnpm run serve\"",
+    "vite": "vite"
   },
   "keywords": [],
   "author": "",
