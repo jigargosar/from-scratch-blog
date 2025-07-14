@@ -4,6 +4,27 @@ const path = require("path");
 const commonmark = require("commonmark");
 const matter = require("gray-matter");
 
+function getPaths() {
+  const baseSrc = __dirname;
+  const baseOut = path.join(baseSrc, "..", "docs");
+  fs.ensureDirSync(baseOut);
+  return {
+    src: baseSrc,
+    out: baseOut,
+    assets: path.join(baseSrc, "assets"),
+    outAssets: path.join(baseOut, "assets"),
+    vendor: path.join(baseSrc, "vendor"),
+    outVendor: path.join(baseOut, "vendor"),
+    posts: path.join(baseSrc, "posts"),
+    outPosts: path.join(baseOut, "posts"),
+    indexPug: path.join(baseSrc, "index.pug"),
+    indexHtml: path.join(baseOut, "index.html"),
+  };
+}
+
+const paths = getPaths();
+
+
 // Paths
 const srcDir = path.join(__dirname);
 const outDir = path.join(__dirname, "..", "docs");
