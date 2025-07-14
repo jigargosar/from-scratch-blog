@@ -3,20 +3,19 @@ import Run from "vite-plugin-run";
 import path from "node:path";
 
 export default defineConfig({
-  root: path.resolve(__dirname, "docs"), // serve final output
-  //   publicDir: false, // disable asset pipeline
-  publicDir: path.resolve(__dirname, "src/assets"), // disable asset pipeline
+  root: path.resolve(__dirname, "docs"),
+  publicDir: false,
   server: {
     open: true,
     watch: {
-      ignored: ["**/docs/**"], // prevent reload loops
+      ignored: ["**/docs/**"], // avoids infinite reload loops
     },
   },
   plugins: [
     Run({
-      name: "Build on source change",
+      name: "Rebuild static site",
       watch: ["src/**/*.pug", "src/posts/**/*.md"],
-      run: ["node", "src/build.js"], // absolute control over build
+      run: ["node", "src/build.js"],
     }),
   ],
 });

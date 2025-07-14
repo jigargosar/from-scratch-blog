@@ -17,10 +17,10 @@ const indexHtml = path.join(outDir, 'index.html');
 fs.ensureDirSync(outDir);
 
 // Copy assets folder (fail if missing)
-// const srcAssets = path.join(__dirname, 'assets');
-// const docsAssets = path.join(__dirname, '..', 'docs', 'assets');
-// fs.copySync(srcAssets, docsAssets);
-// console.log('Copied assets folder to docs/assets');
+const srcAssets = path.join(__dirname, 'assets');
+const docsAssets = path.join(__dirname, '..', 'docs', 'assets');
+fs.copySync(srcAssets, docsAssets);
+console.log('Copied assets folder to docs/assets');
 
 // Markdown to HTML for posts
 const postsSrcDir = path.join(srcDir, 'posts');
