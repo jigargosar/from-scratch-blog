@@ -2,8 +2,7 @@ extends layout.pug
 
 block content
   section#posts
-    h2 Recent Posts
-    ul
+    ul.list.pl0
       each post in posts
         li
-          a(href=post.url) #{post.title}
+          a.white(href=post.url) #{post.title}
