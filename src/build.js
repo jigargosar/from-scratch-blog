@@ -7,7 +7,8 @@ const matter = require("gray-matter");
 function getPaths() {
   const baseSrc = __dirname;
   const baseOut = path.join(baseSrc, "..", "docs");
-  const paths = {
+  fs.ensureDirSync(baseOut);
+  return {
     src: baseSrc,
     out: baseOut,
     assets: path.join(baseSrc, "assets"),
@@ -18,11 +19,9 @@ function getPaths() {
     outPosts: path.join(baseOut, "posts"),
     indexPug: path.join(baseSrc, "index.pug"),
     indexHtml: path.join(baseOut, "index.html"),
+    layoutPug: path.join(baseSrc, "layout.pug"),
+    postLayoutPug: path.join(baseSrc, "post.pug"),
   };
-  fs.emptyDirSync(paths.out);
-  fs.ensureDirSync(paths.outAssets);
-  fs.ensureDirSync(paths.outPosts);
-  return paths;
 }
 
 const paths = getPaths();
@@ -53,20 +52,17 @@ postFiles.forEach((file) => {
   const outFile = file.replace(/\.md$/, ".html");
   const outPath = path.join(paths.outPosts, outFile);
 
-  // Determine layout
-  let layoutFile = path.join(paths.src, "post.pug");
-
-  // Render with layout
-  const postHtml = pug.renderFile(layoutFile, {
+  const title = mdParsed.data.title || outFile;
+  const postHtml = pug.renderFile(paths.postLayoutPug, {
     pretty: true,
     postHtml: htmlContent,
-    title: mdParsed.data.title || outFile,
+    title,
   });
 
   fs.writeFileSync(outPath, postHtml);
   
   postsMeta.push({
-    title: mdParsed.data.title || outFile,
+    title,
     url: "posts/" + outFile,
   });
 });
