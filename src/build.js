@@ -35,37 +35,41 @@ const paths = getPaths();
   console.log(`Copied ${dir} folder to docs/${dir}`);
 });
 
-// Markdown to HTML for posts
-const postFiles = fs.readdirSync(paths.posts).filter((f) => f.endsWith(".md"));
-const reader = new commonmark.Parser();
-const writer = new commonmark.HtmlRenderer();
 
-const postsMeta = [];
+function buildPosts(paths) {
+  const postFiles = fs.readdirSync(paths.posts).filter((f) => f.endsWith(".md"));
+  const reader = new commonmark.Parser();
+  const writer = new commonmark.HtmlRenderer();
+  const postsMeta = [];
 
-postFiles.forEach((file) => {
-  const mdPath = path.join(paths.posts, file);
-  const mdRaw = fs.readFileSync(mdPath, "utf8");
-  const mdParsed = matter(mdRaw);
-  const mdContent = mdParsed.content;
-  const parsed = reader.parse(mdContent);
-  const htmlContent = writer.render(parsed);
-  const outFile = file.replace(/\.md$/, ".html");
-  const outPath = path.join(paths.outPosts, outFile);
+  postFiles.forEach((file) => {
+    const mdPath = path.join(paths.posts, file);
+    const mdRaw = fs.readFileSync(mdPath, "utf8");
+    const mdParsed = matter(mdRaw);
+    const mdContent = mdParsed.content;
+    const parsed = reader.parse(mdContent);
+    const htmlContent = writer.render(parsed);
+    const outFile = file.replace(/\.md$/, ".html");
+    const outPath = path.join(paths.outPosts, outFile);
 
-  const title = mdParsed.data.title || outFile;
-  const postHtml = pug.renderFile(paths.postLayoutPug, {
-    pretty: true,
-    postHtml: htmlContent,
-    title,
+    const title = mdParsed.data.title || outFile;
+    const postHtml = pug.renderFile(paths.postLayoutPug, {
+      pretty: true,
+      postHtml: htmlContent,
+      title,
+    });
+
+    fs.writeFileSync(outPath, postHtml);
+    postsMeta.push({
+      title,
+      url: "posts/" + outFile,
+    });
   });
+  return postsMeta;
+}
 
-  fs.writeFileSync(outPath, postHtml);
-  
-  postsMeta.push({
-    title,
-    url: "posts/" + outFile,
-  });
-});
+// Build posts and get metadata
+const postsMeta = buildPosts(paths);
 
 // Compile index.pug to HTML with dynamic posts
 const html = pug.renderFile(paths.indexPug, { pretty: true, posts: postsMeta });

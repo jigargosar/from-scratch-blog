@@ -5,6 +5,7 @@ module.exports = {
       extensions: ["html"],
     },
   },
+  online: false,
   files: ["docs/**/*.html", "docs/**/*.css", "docs/**/*.js"],
   reloadDebounce: 400,
   notify: true,
