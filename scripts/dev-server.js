@@ -36,7 +36,17 @@ function injectReloadScript(html) {
 
 // Serve static files, inject script for HTML
 app.use(async (req, res, next) => {
-  const filePath = path.join(DOCS_DIR, req.path === '/' ? '/index.html' : req.path);
+  let reqPath = req.path === '/' ? '/index.html' : req.path;
+  let filePath = path.join(DOCS_DIR, reqPath);
+
+  // If no extension, try .html
+  if (!path.extname(filePath)) {
+    const htmlPath = filePath + '.html';
+    if (fs.existsSync(htmlPath)) {
+      filePath = htmlPath;
+    }
+  }
+
   if (fs.existsSync(filePath) && filePath.endsWith('.html')) {
     let html = await fs.promises.readFile(filePath, 'utf8');
     html = injectReloadScript(html);

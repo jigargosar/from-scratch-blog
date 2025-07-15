@@ -14,8 +14,10 @@
   "packageManager": "npm@11.4.2",
   "devDependencies": {
     "browser-sync": "^3.0.4",
+    "chokidar": "^4.0.3",
     "commonmark": "^0.31.2",
     "concurrently": "^9.2.0",
+    "express": "^5.1.0",
     "fs-extra": "^11.3.0",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
