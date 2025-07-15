@@ -1,45 +1,43 @@
 <!DOCTYPE html>
-<html class="bg-black-90 white-80" lang="en" data-theme="dracula">
+<html class="sans-serif bg-black-90 white-80" lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jigar Gosar's Blog</title>
-    <!-- Fonts-->
+    <!-- Font pairing-->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet">
+    <!-- Stylesheets-->
     <link rel="stylesheet" href="/vendor/css/tachyons.css">
+    <!-- Inline style block for custom styling-->
     <style>
       :root {
-        --font-base: 16px;
-        --bg: #282a36;
-        --text: #f8f8f2;
-        --accent: #ff79c6;
-        --link-color: #8be9fd;
-        --link-hover: #50fa7b;
-        --comment: #6272a4;
+        --bg: #0f1117;
+        --text: #e2e2e2;
+        --accent: #00ffe1;
+        --link-hover: #59f1ff;
+        --dim: #444;
       }
       
-      html, body {
-        font-size: var(--font-base);
+      body {
+        font-family: 'Inter', sans-serif;
         background-color: var(--bg);
         color: var(--text);
-        font-family: 'Inter', sans-serif;
-        margin: 0;
         line-height: 1.6;
+        margin: 0;
       }
       
-      h1, h2, h3, code, pre {
+      h1, h2, h3, .cli-prompt, code, pre {
         font-family: 'JetBrains Mono', monospace;
       }
       
-      h1 {
-        font-size: 2.2rem;
+      .cli-prompt {
+        color: var(--accent);
         font-weight: bold;
-        line-height: 1.3;
+        margin-right: 1rem;
       }
       
       nav a {
-        color: var(--link-color);
-        font-size: 1rem;
+        color: var(--accent);
         text-decoration: none;
         padding: 0.3rem 0.6rem;
       }
@@ -49,36 +47,12 @@
         text-decoration: underline;
       }
       
-      .cli-prompt-header,
-      .cli-prompt-footer {
-        color: var(--accent);
-        font-weight: bold;
-        font-family: 'JetBrains Mono', monospace;
-      }
-      
-      .cli-prompt-header {
-        font-size: 1.1rem;
-        margin-right: 0.4rem;
-      }
-      
-      .cli-prompt-footer {
-        font-size: 0.95rem;
-        margin-right: 0.4rem;
-      }
-      
-      .cli-line {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.95rem;
-        color: var(--text);
-      }
-      
       .cursor {
         display: inline-block;
         width: 8px;
         height: 1rem;
         background-color: var(--accent);
-        animation: blink 2.5s steps(2, start) infinite;
-        vertical-align: middle;
+        animation: blink 1s steps(2, start) infinite;
       }
       
       @keyframes blink {
@@ -88,22 +62,22 @@
       
     </style>
   </head>
-  <body class="flex flex-column min-vh-100">
-    <!-- Header-->
-    <header class="flex justify-center items-center pa3 bb b--dark-gray bg-black-80"><span class="cli-prompt-header">jigar@blog:~$</span>
-      <nav class="ml3"><a class="link mr3" href="/">[Home]</a><a class="link mr3" href="/posts">[Posts]</a><a class="link" href="/about">[About]</a></nav>
+  <body class="container">
+    <!-- Header with CLI prompt and nav-->
+    <header class="flex justify-center items-center pa3 bb b--dark-gray"><span class="cli-prompt">jigar@blog:~$</span>
+      <nav class="ml3"><a class="link white-80 hover-light-blue mr3" href="/">[Home]</a><a class="link white-80 hover-light-blue mr3" href="/posts">[Posts]</a><a class="link white-80 hover-light-blue" href="/about">[About]</a></nav>
     </header>
-    <!-- Main content-->
-    <main class="measure-wide center ph2 flex-auto">
+    <!-- Main content block-->
+    <main class="measure-wide center ph2">
       <div class="post-content"><h2>First Post</h2>
 <p>Welcome to your first blog post! This is where you can share your thoughts, ideas, or updates.</p>
 <p><a href="../index.html">← Back to Home</a></p>
 
       </div>
     </main>
-    <!-- Footer-->
+    <!-- Footer with blinking cursor and credit-->
     <footer class="tc pa3 mt4 bt b--dark-gray">
-      <p class="f6 cli-line"><span class="cli-prompt-footer">jigar@blog:~$</span>build.js --love --pug --markdown :><span class="cursor"></span></p>
+      <p class="f7 dark-gray">Powered by Pug & Markdown</p><span class="cursor"></span>
     </footer>
   </body>
 </html>
