@@ -6,56 +6,42 @@
     <title>Jigar Gosar's Blog</title>
     <!-- Fonts-->
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet">
-    <!-- Tachyons-->
     <link rel="stylesheet" href="/vendor/css/tachyons.css">
-    <!-- Inline styles with Dracula & One Dark Pro support-->
     <style>
-      /* Base Theme Variables: Dracula */
       :root {
         --font-base: 16px;
-      
         --bg: #282a36;
         --text: #f8f8f2;
         --accent: #ff79c6;
         --link-color: #8be9fd;
         --link-hover: #50fa7b;
+        --comment: #6272a4;
       }
       
-      :root[data-theme="one-dark"] {
-        --bg: #282c34;
-        --text: #abb2bf;
-        --accent: #61afef;
-        --link-color: #e06c75;
-        --link-hover: #98c379;
-      }
-      
-      html {
+      html, body {
         font-size: var(--font-base);
         background-color: var(--bg);
         color: var(--text);
-      }
-      
-      body {
         font-family: 'Inter', sans-serif;
-        line-height: 1.6;
         margin: 0;
+        line-height: 1.6;
       }
       
-      h1, h2, h3, .cli-prompt, code, pre {
+      h1, h2, h3, code, pre {
         font-family: 'JetBrains Mono', monospace;
       }
       
       h1 {
         font-size: 2.2rem;
-        font-weight: 700;
+        font-weight: bold;
         line-height: 1.3;
       }
       
       nav a {
         color: var(--link-color);
+        font-size: 1rem;
         text-decoration: none;
         padding: 0.3rem 0.6rem;
-        font-size: 1rem;
       }
       
       nav a:hover {
@@ -63,18 +49,21 @@
         text-decoration: underline;
       }
       
-      .cli-prompt-header {
+      .cli-prompt-header,
+      .cli-prompt-footer {
         color: var(--accent);
         font-weight: bold;
+        font-family: 'JetBrains Mono', monospace;
+      }
+      
+      .cli-prompt-header {
         font-size: 1.1rem;
         margin-right: 0.4rem;
       }
       
       .cli-prompt-footer {
-        color: var(--accent);
-        font-weight: bold;
         font-size: 0.95rem;
-        margin-right: 0.3rem;
+        margin-right: 0.4rem;
       }
       
       .cli-line {
@@ -83,24 +72,12 @@
         color: var(--text);
       }
       
-      .theme-option {
-        color: var(--link-color);
-        cursor: pointer;
-        font-weight: bold;
-        margin: 0 0.3rem;
-      }
-      
-      .theme-option:hover {
-        color: var(--link-hover);
-        text-decoration: underline;
-      }
-      
       .cursor {
         display: inline-block;
         width: 8px;
         height: 1rem;
         background-color: var(--accent);
-        animation: blink 1.6s steps(2, start) infinite;
+        animation: blink 2.5s steps(2, start) infinite;
         vertical-align: middle;
       }
       
@@ -111,10 +88,10 @@
       
     </style>
   </head>
-  <body class="container flex flex-column min-vh-100">
+  <body class="flex flex-column min-vh-100">
     <!-- Header-->
     <header class="flex justify-center items-center pa3 bb b--dark-gray bg-black-80"><span class="cli-prompt-header">jigar@blog:~$</span>
-      <nav class="ml3"><a class="link hover-light-blue mr3" href="/">[Home]</a><a class="link hover-light-blue mr3" href="/posts">[Posts]</a><a class="link hover-light-blue" href="/about">[About]</a></nav>
+      <nav class="ml3"><a class="link mr3" href="/">[Home]</a><a class="link mr3" href="/posts">[Posts]</a><a class="link" href="/about">[About]</a></nav>
     </header>
     <!-- Main content-->
     <main class="measure-wide center ph2 flex-auto">
@@ -125,24 +102,9 @@
         </ul>
       </section>
     </main>
-    <!-- Footer with CLI theme switcher-->
+    <!-- Footer-->
     <footer class="tc pa3 mt4 bt b--dark-gray">
-      <p class="f6 cli-line"><span class="cli-prompt-footer">jigar@blog:~$</span>theme --set<span class="theme-option" data-theme="dracula">dracula</span>|<span class="theme-option" data-theme="one-dark">one-dark</span><span class="cursor"></span></p>
+      <p class="f6 cli-line"><span class="cli-prompt-footer">jigar@blog:~$</span>build.js --love --pug --markdown :><span class="cursor"></span></p>
     </footer>
-    <!-- Script to handle theme switching-->
-    <script>
-      document.querySelectorAll('.theme-option').forEach(option => {
-        option.addEventListener('click', () => {
-          const theme = option.dataset.theme;
-          document.documentElement.setAttribute('data-theme', theme);
-          localStorage.setItem('theme', theme);
-        });
-      });
-      
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      }
-    </script>
   </body>
 </html>
