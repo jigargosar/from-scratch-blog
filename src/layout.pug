@@ -1,16 +1,84 @@
 doctype html
-//- html.sans-serif.bg-black-90.white-80(lang="en")
-html.dev-to-font-family.bg-black-90.white-80(lang="en")
+html(lang="en").sans-serif.bg-black-90.white-80
+
   head
     meta(charset="UTF-8")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title Jigar Gosar's Blog
+
+    // Font pairing
+    link(href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;700&display=swap", rel="stylesheet")
+
+    // Stylesheets
     link(rel="stylesheet", href="/vendor/css/tachyons.css")
-    link(rel="stylesheet", href="/assets/css/style.css")
-  body
-    a.header.w-100.tc.white-80.no-underline(href="/")
-      h1.f1.fw1 Jigar Gosar's Blog
+
+    // Inline style block for custom styling
+    style.
+      :root {
+        --bg: #0f1117;
+        --text: #e2e2e2;
+        --accent: #00ffe1;
+        --link-hover: #59f1ff;
+        --dim: #444;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      h1, h2, h3, .cli-prompt, code, pre {
+        font-family: 'JetBrains Mono', monospace;
+      }
+
+      .cli-prompt {
+        color: var(--accent);
+        font-weight: bold;
+        margin-right: 1rem;
+      }
+
+      nav a {
+        color: var(--accent);
+        text-decoration: none;
+        padding: 0.3rem 0.6rem;
+      }
+
+      nav a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+      }
+
+      .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 1rem;
+        background-color: var(--accent);
+        animation: blink 1s steps(2, start) infinite;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+  body.container
+
+    // Header with CLI prompt and nav
+    header.flex.justify-center.items-center.pa3.bb.b--dark-gray
+      span.cli-prompt jigar@blog:~$
+      nav.ml3
+        a.link.white-80.hover-light-blue.mr3(href="/") [Home]
+        a.link.white-80.hover-light-blue.mr3(href="/posts") [Posts]
+        a.link.white-80.hover-light-blue(href="/about") [About]
+
+    // Main content block
     main.measure-wide.center.ph2
       block content
-    footer.dn
-      p &copy; 2025 Jigar Gosar's Blog
+
+    // Footer with blinking cursor and credit
+    footer.tc.pa3.mt4.bt.b--dark-gray
+      p.f7.dark-gray Powered by Pug & Markdown
+      span.cursor

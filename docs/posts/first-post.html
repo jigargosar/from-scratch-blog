@@ -1,14 +1,73 @@
 <!DOCTYPE html>
-<html class="dev-to-font-family bg-black-90 white-80" lang="en">
+<html class="sans-serif bg-black-90 white-80" lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jigar Gosar's Blog</title>
+    <!-- Font pairing-->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet">
+    <!-- Stylesheets-->
     <link rel="stylesheet" href="/vendor/css/tachyons.css">
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- Inline style block for custom styling-->
+    <style>
+      :root {
+        --bg: #0f1117;
+        --text: #e2e2e2;
+        --accent: #00ffe1;
+        --link-hover: #59f1ff;
+        --dim: #444;
+      }
+      
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+        margin: 0;
+      }
+      
+      h1, h2, h3, .cli-prompt, code, pre {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      
+      .cli-prompt {
+        color: var(--accent);
+        font-weight: bold;
+        margin-right: 1rem;
+      }
+      
+      nav a {
+        color: var(--accent);
+        text-decoration: none;
+        padding: 0.3rem 0.6rem;
+      }
+      
+      nav a:hover {
+        color: var(--link-hover);
+        text-decoration: underline;
+      }
+      
+      .cursor {
+        display: inline-block;
+        width: 8px;
+        height: 1rem;
+        background-color: var(--accent);
+        animation: blink 1s steps(2, start) infinite;
+      }
+      
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+      
+    </style>
   </head>
-  <body><a class="header w-100 tc white-80 no-underline" href="/">
-      <h1 class="f1 fw1">Jigar Gosar's Blog</h1></a>
+  <body class="container">
+    <!-- Header with CLI prompt and nav-->
+    <header class="flex justify-center items-center pa3 bb b--dark-gray"><span class="cli-prompt">jigar@blog:~$</span>
+      <nav class="ml3"><a class="link white-80 hover-light-blue mr3" href="/">[Home]</a><a class="link white-80 hover-light-blue mr3" href="/posts">[Posts]</a><a class="link white-80 hover-light-blue" href="/about">[About]</a></nav>
+    </header>
+    <!-- Main content block-->
     <main class="measure-wide center ph2">
       <div class="post-content"><h2>First Post</h2>
 <p>Welcome to your first blog post! This is where you can share your thoughts, ideas, or updates.</p>
@@ -16,8 +75,9 @@
 
       </div>
     </main>
-    <footer class="dn">
-      <p>&copy; 2025 Jigar Gosar's Blog</p>
+    <!-- Footer with blinking cursor and credit-->
+    <footer class="tc pa3 mt4 bt b--dark-gray">
+      <p class="f7 dark-gray">Powered by Pug & Markdown</p><span class="cursor"></span>
     </footer>
   </body>
 </html>

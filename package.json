@@ -6,7 +6,8 @@
   "scripts": {
     "watch": "nodemon --watch src --ext css,js,pug,md --exec node src/build.js",
     "sync": "browser-sync start --config .bs-config.js",
-    "dev": "concurrently --prefix-colors \"blueBright,greenBright\" \"npm run watch\" \"npm run sync\""
+    "dev-old": "concurrently --prefix-colors \"blueBright,greenBright\" \"npm run watch\" \"npm run sync\"",
+    "dev": "node scripts/dev-server.js"
   },
   "keywords": [],
   "author": "",
