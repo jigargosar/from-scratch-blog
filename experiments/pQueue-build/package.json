@@ -1,0 +1,18 @@
+{
+  "name": "pqueue-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "chokidar": "^4.0.3",
+    "lodash.debounce": "^4.0.8",
+    "p-queue": "^8.1.0"
+  }
+}
