@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "nodemon --watch src --ext css,js,pug,md --exec node src/build.js",
+    "watch": "nodemon --watch src --ext css,js,pug,md --exec node scripts/build.js",
     "sync": "browser-sync start --config .bs-config.js",
     "dev-old": "concurrently --prefix-colors \"blueBright,greenBright\" \"npm run watch\" \"npm run sync\"",
     "dev": "node scripts/dev-server.js"

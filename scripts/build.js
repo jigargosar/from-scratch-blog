@@ -5,7 +5,7 @@ const commonmark = require("commonmark");
 const matter = require("gray-matter");
 
 function getPaths() {
-  const baseSrc = __dirname;
+  const baseSrc = path.join(__dirname, "..", "src");
   const baseOut = path.join(baseSrc, "..", "docs");
   const paths = {
     src: baseSrc,
