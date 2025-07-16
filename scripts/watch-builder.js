@@ -1,46 +1,50 @@
 // watch-builder.js
-const chokidar = require('chokidar');
-const PQueue   = require('p-queue').default;
-const debounce = require('lodash.debounce');
+const chokidar = require('chokidar')
+const PQueue   = require('p-queue').default
+const debounce = require('lodash.debounce')
 
 /**
+ * Creates a file‐watcher + single‐concurrency build queue.
+ *
  * @param {Object}   opts
- * @param {string}   opts.watch       – Path or glob to watch
+ * @param {string}   opts.watch       – Glob or path to watch
  * @param {number}   opts.debounceMs  – Delay (ms) after last change
- * @param {Function} opts.buildFn     – () => Promise for your build
- * @param {Function} [opts.onIdle]    – Called on every queue empty
+ * @param {Function} opts.buildFn     – () => Promise for running your build
+ * @param {Function} [opts.onIdle]    – Called every time the queue empties
+ *
+ * @returns {{ queue: PQueue, scheduleBuild: Function }}
  */
 function createBuilder({ watch, debounceMs, buildFn, onIdle }) {
-    // 1) Create a single‐concurrency queue
-    const queue = new PQueue({ concurrency: 1 });
+    // single‐concurrency queue (no parallel builds)
+    const queue = new PQueue({ concurrency: 1 })
 
-    // 2) Debounced scheduler for subsequent builds
+    // trailing‐only debounce: clear pending, then enqueue a build
     const scheduleBuild = debounce(() => {
-        queue.clear();           // drop any pending rebuilds
-        queue.add(() => buildFn().catch(err => {
-            console.error('Build failed:', err);
-        }));
-    }, debounceMs);
+        queue.clear()
+        queue.add(() =>
+            buildFn().catch(err => console.error('Rebuild failed:', err))
+        )
+    }, debounceMs)
 
-    // 3) Watch for changes → schedule builds
+    // watch your source directory (no initial “add” events)
     chokidar
         .watch(watch, { ignoreInitial: true })
-        .on('all', (_, file) => {
-            console.log(`File changed → ${file}`);
-            scheduleBuild();
-        });
+        .on('all', (evt, file) => {
+            console.log(`[${new Date().toISOString()}] ${evt} → ${file}`)
+            scheduleBuild()
+        })
 
-    // 4) Persistent idle listener fires after *every* build cycle
+    // persistent idle listener fires on *every* build completion
     if (typeof onIdle === 'function') {
-        queue.on('idle', onIdle);
+        queue.on('idle', onIdle)
     }
 
-    // 5) Enqueue the initial build *after* watcher + idle are wired
-    queue.add(() => buildFn().catch(err => {
-        console.error('Initial build failed:', err);
-    }));
+    // enqueue the initial build
+    queue.add(() =>
+        buildFn().catch(err => console.error('Initial build failed:', err))
+    )
 
-    return { queue, scheduleBuild };
+    return { queue, scheduleBuild }
 }
 
-module.exports = { createBuilder };
+module.exports = { createBuilder }
