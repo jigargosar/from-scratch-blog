@@ -1,69 +1,76 @@
-const express = require('express');
-const path = require('path');
-const fs = require('fs');
-const chokidar = require('chokidar');
+// server.js
+const express   = require('express');
+const path      = require('path');
+const fs        = require('fs');
 const { spawn } = require('child_process');
+const { createBuilder } = require('./watch-builder');
 
-const app = express();
-const PORT = 3000;
+const app      = express();
+const PORT     = 3000;
 const DOCS_DIR = path.join(__dirname, '../docs');
-const SRC_DIR = path.join(__dirname, '../src');
-const BUILD_SCRIPT_PATH = path.join(__dirname, 'build.js');
+const SRC_DIR  = path.join(__dirname, '../src');
 
 let clients = [];
 
-// SSE endpoint
+// 1. SSE reload endpoint
 app.get('/reload', (req, res) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
+  res.setHeader('Content-Type',  'text/event-stream');
+  res.setHeader('Cache-Control',   'no-cache');
+  res.setHeader('Connection',      'keep-alive');
   res.flushHeaders();
 
   clients.push(res);
-
-  req.on('close', () => {
-    clients = clients.filter(c => c !== res);
-  });
+  req.on('close', () => { clients = clients.filter(c => c !== res); });
 });
 
-// Inject reload script into HTML
+// 2. HTML injector + static server (unchanged)
 function injectReloadScript(html) {
-  const script = `\n<script>\n  const es = new EventSource('/reload');\n  es.onmessage = () => location.reload();\n</script>\n`;
-  return html.replace(/<\/body>/i, script + '</body>');
+  const snippet = `
+<script>
+  const es = new EventSource('/reload');
+  es.onmessage = () => location.reload();
+</script>`;
+  return html.replace(/<\/body>/i, snippet + '</body>');
 }
 
-// Serve static files, inject script for HTML
-app.use(async (req, res, next) => {
+app.use((req, res, next) => {
   let reqPath = req.path === '/' ? '/index.html' : req.path;
   let filePath = path.join(DOCS_DIR, reqPath);
 
-  // If no extension, try .html
   if (!path.extname(filePath)) {
     const htmlPath = filePath + '.html';
-    if (fs.existsSync(htmlPath)) {
-      filePath = htmlPath;
-    }
+    if (fs.existsSync(htmlPath)) filePath = htmlPath;
   }
 
   if (fs.existsSync(filePath) && filePath.endsWith('.html')) {
-    let html = await fs.promises.readFile(filePath, 'utf8');
-    html = injectReloadScript(html);
-    res.setHeader('Content-Type', 'text/html');
-    res.send(html);
+    fs.promises.readFile(filePath, 'utf8')
+        .then(html => res.send(injectReloadScript(html)))
+        .catch(next);
   } else {
     express.static(DOCS_DIR)(req, res, next);
   }
 });
 
-// Watch src for changes and run build
-chokidar.watch(SRC_DIR).on('all', (event, pathChanged) => {
-  console.log(`File changed: ${pathChanged}`);
-  const build = spawn('node', [BUILD_SCRIPT_PATH]);
-  build.on('close', () => {
+// 3. Centralized watcher + builder
+createBuilder({
+  watch: SRC_DIR,
+  debounceMs: 500,
+
+  // your real build command
+  buildFn: () => new Promise((resolve, reject) => {
+    console.log('▶️  Running build…');
+    const p = spawn('node', [path.join(__dirname, 'build.js')], { stdio: 'inherit' });
+    p.on('close', code => code === 0 ? resolve() : reject(code));
+  }),
+
+  // fire an SSE reload on every build completion
+  onIdle: () => {
+    console.log('🔄 Builds done — reloading clients');
     clients.forEach(res => res.write('data: reload\n\n'));
-  });
+  }
 });
 
+// 4. Start server
 app.listen(PORT, () => {
   console.log(`Dev server running at http://localhost:${PORT}`);
 });
