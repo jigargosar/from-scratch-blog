@@ -14,6 +14,9 @@
   "license": "ISC",
   "packageManager": "npm@11.4.2",
   "devDependencies": {
+    "@types/commonmark": "^0.27.10",
+    "@types/fs-extra": "^11.0.4",
+    "@types/pug": "^2.0.10",
     "browser-sync": "^3.0.4",
     "chokidar": "^4.0.3",
     "commonmark": "^0.31.2",

@@ -7,8 +7,7 @@ const matter = require("gray-matter");
 function getPaths() {
   const baseSrc = __dirname;
   const baseOut = path.join(baseSrc, "..", "docs");
-  fs.ensureDirSync(baseOut);
-  return {
+  const paths = {
     src: baseSrc,
     out: baseOut,
     assets: path.join(baseSrc, "assets"),
@@ -22,6 +21,10 @@ function getPaths() {
     layoutPug: path.join(baseSrc, "layout.pug"),
     postLayoutPug: path.join(baseSrc, "post.pug"),
   };
+  fs.emptyDirSync(paths.out);
+  fs.ensureDirSync(paths.outAssets);
+  fs.ensureDirSync(paths.outPosts);
+  return paths;
 }
 
 const paths = getPaths();
@@ -30,7 +33,6 @@ const paths = getPaths();
 ["assets", "vendor"].forEach((dir) => {
   const srcPath = path.join(paths.src, dir);
   const outPath = path.join(paths.out, dir);
-  fs.ensureDirSync(outPath);
   fs.copySync(srcPath, outPath);
   console.log(`Copied ${dir} folder to docs/${dir}`);
 });
