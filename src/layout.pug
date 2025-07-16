@@ -21,13 +21,16 @@ html(lang="en")
         --dim: #444;
       }
 
-        /* Custom Tachyons-style color utilities */
-        .accent {
-          color: var(--accent) !important;
-        }
-        .hover-accent:hover {
-          color: var(--link-hover) !important;
-        }
+      /* Custom Tachyons-style color utilities */
+      .accent {
+        color: var(--accent) !important;
+      }
+      .hover-accent:hover {
+        color: var(--link-hover) !important;
+      }
+      .underline-accent-hover:hover {
+        text-decoration-color: var(--accent) !important;
+      }
 
       body {
         font-family: 'Inter', sans-serif;
@@ -46,7 +49,6 @@ html(lang="en")
         font-weight: bold;
         margin-right: 1rem;
       }
-
 
       .cursor {
         display: inline-block;
@@ -67,9 +69,9 @@ html(lang="en")
     header.flex.justify-center.items-center.pa3.bb.b--dark-gray
       span.cli-prompt jigar@blog:~$
       nav.ml3
-        a.link.white-80.hover-accent.underline-hover.pa2.mr3(href="/") [Home]
-        a.link.white-80.hover-accent.underline-hover.pa2.mr3(href="/posts") [Posts]
-        a.link.white-80.hover-accent.underline-hover.pa2.mr3(href="/about") [About]
+        a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href="/") [Home]
+        a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href="/posts") [Posts]
+        a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href="/about") [About]
 
     // Main content block
     main.measure-wide.center.ph2
