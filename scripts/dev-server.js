@@ -3,7 +3,7 @@ const express   = require('express');
 const path      = require('path');
 const fs        = require('fs');
 const { spawn } = require('child_process');
-const { createBuilder } = require('./watch-builder');
+const watcher = require('./watcher');
 
 const app      = express();
 const PORT     = 3000;
@@ -52,19 +52,19 @@ app.use((req, res, next) => {
 });
 
 // 3. Centralized watcher + builder
-createBuilder({
-  watch: SRC_DIR,
-  debounceMs: 500,
+watcher({
+  paths: SRC_DIR,
+  delay: 500,
 
   // your real build command
-  buildFn: () => new Promise((resolve, reject) => {
+  exec: () => new Promise((resolve, reject) => {
     console.log('▶️  Running build…');
     const p = spawn('node', [path.join(__dirname, 'build.js')], { stdio: 'inherit' });
     p.on('close', code => code === 0 ? resolve() : reject(code));
   }),
 
   // fire an SSE reload on every build completion
-  onIdle: () => {
+  afterExec: () => {
     console.log('🔄 Builds done — reloading clients');
     clients.forEach(res => res.write('data: reload\n\n'));
   }
