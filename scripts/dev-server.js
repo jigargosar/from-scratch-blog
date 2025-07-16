@@ -1,6 +1,3 @@
-// dev-server.js
-// Express server for static file serving and live reload (SSE)
-
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -11,6 +8,7 @@ const app = express();
 const PORT = 3000;
 const DOCS_DIR = path.join(__dirname, '../docs');
 const SRC_DIR = path.join(__dirname, '../src');
+const BUILD_SCRIPT_PATH = path.join(__dirname, 'build.js');
 
 let clients = [];
 
@@ -58,9 +56,9 @@ app.use(async (req, res, next) => {
 });
 
 // Watch src for changes and run build
-chokidar.watch(SRC_DIR, { ignoreInitial: true }).on('all', (event, pathChanged) => {
+chokidar.watch(SRC_DIR).on('all', (event, pathChanged) => {
   console.log(`File changed: ${pathChanged}`);
-  const build = spawn('node', [path.join(SRC_DIR, 'build.js')]);
+  const build = spawn('node', [BUILD_SCRIPT_PATH]);
   build.on('close', () => {
     clients.forEach(res => res.write('data: reload\n\n'));
   });
