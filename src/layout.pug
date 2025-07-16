@@ -1,3 +1,6 @@
+mixin navLink(href, label)
+  a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href=href)= label
+
 doctype html
 html(lang="en")
   head
@@ -69,9 +72,9 @@ html(lang="en")
     header.flex.justify-center.items-center.pa3.bb.b--dark-gray
       span.cli-prompt jigar@blog:~$
       nav.ml3
-        a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href="/") [Home]
-        a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href="/posts") [Posts]
-        a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href="/about") [About]
+        +navLink('/', '[Home]')
+        +navLink('/posts', '[Posts]')
+        +navLink('/about', '[About]')
 
     // Main content block
     main.measure-wide.center.ph2
