@@ -1,6 +1,6 @@
 // watch-builder.js
 const chokidar = require('chokidar')
-const PQueue   = require('p-queue').default
+const PQueue = require('p-queue').default
 const debounce = require('lodash.debounce')
 
 /**
@@ -29,8 +29,8 @@ function makeSafeTask(buildFn) {
  *
  * @returns {{ queue: PQueue, scheduleBuild: Function }}
  */
-function createBuilder({ watch, debounceMs, buildFn, onIdle }) {
-    const queue = new PQueue({ concurrency: 1 })
+function createBuilder({watch, debounceMs, buildFn, onIdle}) {
+    const queue = new PQueue({concurrency: 1})
 
     // 1) Central catch for any uncaught queue errors
     queue.on('error', err => {
@@ -43,12 +43,12 @@ function createBuilder({ watch, debounceMs, buildFn, onIdle }) {
     // 2) Debounced scheduler for subsequent builds
     const scheduleBuild = debounce(() => {
         queue.clear()
-        queue.add(makeSafeTask(buildFn))
+        void queue.add(makeSafeTask(buildFn))
     }, debounceMs)
 
     // 3) Watch source files
     chokidar
-        .watch(watch, { ignoreInitial: true })
+        .watch(watch, {ignoreInitial: true})
         .on('all', (ev, file) => {
             console.log(`[${new Date().toISOString()}] ${ev} → ${file}`)
             scheduleBuild()
@@ -75,9 +75,9 @@ function createBuilder({ watch, debounceMs, buildFn, onIdle }) {
     }
 
     // 5) Enqueue initial build (safe, non-fatal)
-    queue.add(makeSafeTask(buildFn))
+    void queue.add(makeSafeTask(buildFn))
 
-    return { queue, scheduleBuild }
+    return {queue, scheduleBuild}
 }
 
-module.exports = { createBuilder }
+module.exports = {createBuilder}
