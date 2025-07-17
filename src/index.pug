@@ -2,7 +2,9 @@ extends layout.pug
 
 block content
   section#posts
-    ul.list.pl0
+    ul.f4.white-80
       each post in posts
-        li
-          a.white(href=post.url) #{post.title}
+        li.lh-copy
+          .dib 2004
+          .dib.tc.pr2 »
+          a.color-inherit(href=post.url, style="text-underline-offset:0.2em;") #{post.title}
