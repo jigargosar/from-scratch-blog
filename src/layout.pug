@@ -1,5 +1,5 @@
 mixin navLink(href, label)
-  a.link.white-80.underline-hover.underline-accent-hover.pa2.mr3(href=href)= label
+  a.link.white-80.underline-hover.underline-cyan-hover.pa2.mr3(href=href)= label
 
 doctype html
 html(lang="en")
@@ -19,20 +19,32 @@ html(lang="en")
       :root {
         --bg: #0f1117;
         --text: #e2e2e2;
-        --accent: #00ffe1;
+        --cyan: #00ffe1;
         --link-hover: #59f1ff;
         --dim: #444;
       }
 
-      /* Custom Tachyons-style color utilities */
-      .accent {
-        color: var(--accent) !important;
+      /* Custom Tachyons-style color utilities for cyan */
+      .cyan {
+        color: var(--cyan) !important;
       }
-      .hover-accent:hover {
-        color: var(--link-hover) !important;
+      .bg-cyan {
+        background-color: var(--cyan) !important;
       }
-      .underline-accent-hover:hover {
-        text-decoration-color: var(--accent) !important;
+      .b--cyan {
+        border-color: var(--cyan) !important;
+      }
+      .hover-cyan:hover {
+        color: var(--cyan) !important;
+      }
+      .hover-bg-cyan:hover {
+        background-color: var(--cyan) !important;
+      }
+      .hover-b--cyan:hover {
+        border-color: var(--cyan) !important;
+      }
+      .underline-cyan-hover:hover {
+        text-decoration-color: var(--cyan) !important;
       }
 
       body {
@@ -48,7 +60,7 @@ html(lang="en")
       }
 
       .cli-prompt {
-        color: var(--accent);
+        color: var(--cyan);
         font-weight: bold;
         margin-right: 1rem;
       }
@@ -57,7 +69,7 @@ html(lang="en")
         display: inline-block;
         width: 8px;
         height: 1rem;
-        background-color: var(--accent);
+        background-color: var(--cyan);
         animation: blink 1s steps(2, start) infinite;
       }
 
