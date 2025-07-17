@@ -51,7 +51,7 @@ html(lang="en")
         }
       }
 
-  body.inter.bg-black-90.white-80
+  body.inter.bg-black-90.white-80.flex.flex-column.min-vh-100
 
     // Header with CLI prompt and nav
     header.flex.justify-center.items-center.pa3.bb.b--dark-gray
@@ -62,10 +62,10 @@ html(lang="en")
         +navLink('/about', '[About]')
 
     // Main content block
-    main.measure-wide.center.ph2
+    main.w-100.measure-wide.center.ph2.flex-grow-1
       block content
 
     // Footer with blinking cursor and credit
-    footer.tc.pa3.bt.b--dark-gray
+    footer.w-100.tc.pa3.bt.b--dark-gray
       p.f7.light-silver Powered by Pug & Markdown
       span.cursor.dib.bg-cyan

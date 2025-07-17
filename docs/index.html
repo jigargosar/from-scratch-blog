@@ -47,14 +47,14 @@
       
     </style>
   </head>
-  <body class="inter bg-black-90 white-80">
+  <body class="inter bg-black-90 white-80 flex flex-column min-vh-100">
     <!-- Header with CLI prompt and nav-->
     <header class="flex justify-center items-center pa3 bb b--dark-gray"><span class="fw6 mr3 cyan mono">jigar@blog:~$</span>
       <nav class="ml3"><a class="link white-80 underline-hover underline-cyan-hover pa2 mr3" href="/">[Home]</a><a class="link white-80 underline-hover underline-cyan-hover pa2 mr3" href="/posts">[Posts]</a><a class="link white-80 underline-hover underline-cyan-hover pa2 mr3" href="/about">[About]</a>
       </nav>
     </header>
     <!-- Main content block-->
-    <main class="measure-wide center ph2">
+    <main class="w-100 measure-wide center ph2 flex-grow-1">
       <section id="posts">
         <ul class="list pl0">
           <li><a class="white" href="posts/first-post.html">First Post</a></li>
@@ -63,7 +63,7 @@
       </section>
     </main>
     <!-- Footer with blinking cursor and credit-->
-    <footer class="tc pa3 bt b--dark-gray">
+    <footer class="w-100 tc pa3 bt b--dark-gray">
       <p class="f7 light-silver">Powered by Pug & Markdown</p><span class="cursor dib bg-cyan"></span>
     </footer>
   </body>
