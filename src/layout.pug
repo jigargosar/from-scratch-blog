@@ -16,13 +16,6 @@ html(lang="en")
 
     // Inline style block for custom styling
     style.
-      :root {
-      }
-
-      .inter {
-        font-family: 'Inter', sans-serif;
-      }
-
       .mono {
         font-family: 'JetBrains Mono', monospace;
       }
@@ -50,15 +43,12 @@ html(lang="en")
       }
 
   body.mono.fw1.bg-near-black.light-gray.flex.flex-column.min-vh-100
-    // Header with CLI prompt and nav
     header.flex.justify-center.items-center.pa3.bb.b--dark-gray
       span.cyan jigar@blog:~$
 
-    // Main content block
     main.w-100.measure-wide.center.ph2.flex-grow-1
       block content
 
-    // Footer with blinking cursor and credit
     footer.w-100.tc.pa3.bt.b--dark-gray
       p.f7.light-silver Powered by Pug & Markdown
       span.cursor.dib.bg-cyan
