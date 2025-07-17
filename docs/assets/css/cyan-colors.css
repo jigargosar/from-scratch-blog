@@ -1,0 +1,28 @@
+/* Cyan Color Palette (Tachyons-style naming) */
+:root {
+  --cyan: #00ffe1;
+  --link-hover: #59f1ff;
+}
+
+.cyan {
+  color: var(--cyan) !important;
+}
+.bg-cyan {
+  background-color: var(--cyan) !important;
+}
+.b--cyan {
+  border-color: var(--cyan) !important;
+}
+.hover-cyan:hover {
+  color: var(--cyan) !important;
+}
+.hover-bg-cyan:hover {
+  background-color: var(--cyan) !important;
+}
+.hover-b--cyan:hover {
+  border-color: var(--cyan) !important;
+}
+.underline-cyan-hover:hover {
+  text-decoration-color: var(--cyan) !important;
+}
+

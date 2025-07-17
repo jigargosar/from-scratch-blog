@@ -13,44 +13,12 @@ html(lang="en")
 
     // Stylesheets
     link(rel="stylesheet", href="/vendor/css/tachyons.css")
+    link(rel="stylesheet", href="/assets/css/cyan-colors.css")
+    link(rel="stylesheet", href="/assets/css/intellij-modern-dark-palette.css")
 
     // Inline style block for custom styling
     style.
       :root {
-        --bg: #0f1117;
-        --text: #e2e2e2;
-        --cyan: #00ffe1;
-        --link-hover: #59f1ff;
-        --dim: #444;
-      }
-
-      /* Custom Tachyons-style color utilities for cyan */
-      .cyan {
-        color: var(--cyan) !important;
-      }
-
-      .bg-cyan {
-        background-color: var(--cyan) !important;
-      }
-
-      .b--cyan {
-        border-color: var(--cyan) !important;
-      }
-
-      .hover-cyan:hover {
-        color: var(--cyan) !important;
-      }
-
-      .hover-bg-cyan:hover {
-        background-color: var(--cyan) !important;
-      }
-
-      .hover-b--cyan:hover {
-        border-color: var(--cyan) !important;
-      }
-
-      .underline-cyan-hover:hover {
-        text-decoration-color: var(--cyan) !important;
       }
 
       .inter {
@@ -65,16 +33,22 @@ html(lang="en")
         display: inline-block;
         width: 8px;
         height: 1rem;
-        background-color: var(--cyan);
-        animation: blink 1s steps(2, start) infinite;
-      }
+        animation: blink-cursor 1.5s infinite steps(2, start); /* Adjust duration for the overall cycle speed */
 
-      @keyframes blink {
-        0%, 100% {
-          opacity: 1;
+      }
+      
+      @keyframes blink-cursor {
+        0% {
+            opacity: 1; /* Cursor starts ON */
         }
-        50% {
-          opacity: 0;
+        70% {
+            opacity: 1; /* Cursor stays ON for most of the animation cycle */
+        }
+        80% {
+            opacity: 0; /* Cursor quickly turns OFF */
+        }
+        100% {
+            opacity: 0; /* Cursor remains OFF for a short period before restarting */
         }
       }
 
@@ -95,4 +69,4 @@ html(lang="en")
     // Footer with blinking cursor and credit
     footer.tc.pa3.mt4.bt.b--dark-gray
       p.f7.dark-gray Powered by Pug & Markdown
-      span.cursor
+      span.cursor.bg-cyan

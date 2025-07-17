@@ -1,0 +1,43 @@
+/* IntelliJ Color Palette (Tachyons-style naming) */
+:root {
+  --midnight: #23262f;      /* Main background */
+  --slate: #2b2d31;         /* Header/Footer background */
+  --mist: #a9b7c6;          /* Secondary text */
+  --silver: #d9d9d9;        /* Main text */
+  --royal-blue: #3574f0;    /* Accent blue */
+  --mint: #4ad991;          /* Accent green */
+  --violet: #a259f7;        /* Accent purple */
+  --coral: #f78c6c;         /* Accent orange */
+  --cyan: #00ffe1;          /* Accent cyan (already used) */
+}
+
+/* Background color utilities */
+.bg-midnight { background-color: var(--midnight) !important; }
+.bg-slate { background-color: var(--slate) !important; }
+
+/* Text color utilities */
+.midnight { color: var(--midnight) !important; }
+.slate { color: var(--slate) !important; }
+.mist { color: var(--mist) !important; }
+.silver { color: var(--silver) !important; }
+.royal-blue { color: var(--royal-blue) !important; }
+.mint { color: var(--mint) !important; }
+.violet { color: var(--violet) !important; }
+.coral { color: var(--coral) !important; }
+.cyan { color: var(--cyan) !important; }
+
+/* Border color utilities */
+.b--midnight { border-color: var(--midnight) !important; }
+.b--slate { border-color: var(--slate) !important; }
+.b--royal-blue { border-color: var(--royal-blue) !important; }
+.b--mint { border-color: var(--mint) !important; }
+.b--violet { border-color: var(--violet) !important; }
+.b--coral { border-color: var(--coral) !important; }
+.b--cyan { border-color: var(--cyan) !important; }
+
+/* Accent background utilities */
+.bg-royal-blue { background-color: var(--royal-blue) !important; }
+.bg-mint { background-color: var(--mint) !important; }
+.bg-violet { background-color: var(--violet) !important; }
+.bg-coral { background-color: var(--coral) !important; }
+.bg-cyan { background-color: var(--cyan) !important; }
