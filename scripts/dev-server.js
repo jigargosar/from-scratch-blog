@@ -5,9 +5,8 @@ const fs = require('fs')
 const { spawn } = require('child_process')
 const watcher = require('./watcher')
 const open = require('open').default
-const notifier = require('node-notifier');
-
-
+const notifier = require('node-notifier')
+const clipboard = require('clipboardy').default
 
 const app = express()
 const PORT = 3000
@@ -64,7 +63,7 @@ watcher({
   exec: () =>
     new Promise((resolve, reject) => {
       console.log('▶️  Running build…')
-      const p = spawn('node', [path.join(__dirname, 'build.j')], {
+      const p = spawn('node', [path.join(__dirname, 'build.js')], {
         stdio: 'inherit',
       })
       p.on('close', function (code) {
@@ -73,7 +72,7 @@ watcher({
         } else {
           const message = 'Build Failed: ' + code
           console.error(message)
-          notifier.notify(message);
+          notifier.notify(message)
           return reject(code)
         }
       })
@@ -87,6 +86,16 @@ watcher({
 
 app.listen(PORT, () => {
   const url = `http://localhost:${PORT}`
-  console.log(`Dev server running at ${url}`)
-  console.log(open(url))
+  // console.log(`Dev server running at ${url}`)
+  // console.log(open(url))
+  void copyUrlToClipboard(url)
 })
+
+async function copyUrlToClipboard(url) {
+  try {
+    await clipboard.write(url)
+    console.log(`Copied server URL to clipboard: ${url}`)
+  } catch (error) {
+    console.error(`Failed to copy URL: ${url}`, error)
+  }
+}
