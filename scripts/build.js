@@ -37,6 +37,13 @@ const paths = getPaths()
   console.log(`Copied ${dir} folder to docs/${dir}`)
 })
 
+
+function getAssetPrefix(outPath, docsDir) {
+  // Calculate relative path from outPath to docsDir
+  const rel = path.relative(path.dirname(outPath), docsDir) || '.';
+  return rel === '.' ? '' : rel + '/';
+}
+
 function buildPosts(paths) {
   const postFiles = fs.readdirSync(paths.posts).filter(f => f.endsWith('.md'))
   const reader = new commonmark.Parser()
@@ -54,10 +61,12 @@ function buildPosts(paths) {
     const outPath = path.join(paths.outPosts, outFile)
 
     const title = mdParsed.data.title || outFile
+    const assetPrefix = getAssetPrefix(outPath, paths.out);
     const postHtml = pug.renderFile(paths.postLayoutPug, {
       pretty: true,
       postHtml: htmlContent,
       title,
+      assetPrefix,
     })
 
     fs.writeFileSync(outPath, postHtml)
@@ -73,6 +82,7 @@ function buildPosts(paths) {
 const postsMeta = buildPosts(paths)
 
 // Compile index.pug to HTML with dynamic posts
-const html = pug.renderFile(paths.indexPug, { pretty: true, posts: postsMeta })
+const assetPrefix = '';
+const html = pug.renderFile(paths.indexPug, { pretty: true, posts: postsMeta, assetPrefix })
 fs.writeFileSync(paths.indexHtml, html)
 console.log('index.pug processed and index.html generated in docs/')
