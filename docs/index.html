@@ -44,10 +44,19 @@
   <body class="mono fw1 bg-near-black light-gray flex flex-column min-vh-100">
     <header class="flex justify-center items-center pa3 bb b--dark-gray"><span class="cyan">jigar@blog:~$</span></header>
     <main class="w-100 measure-wide center ph2 flex-grow-1">
+      <style>
+        .underline-offset {
+          text-underline-offset:0.2em;
+        }
+        
+        .decoration-thickness{
+          text-decoration-thickness:0.01em;
+        }
+      </style>
       <section id="posts">
         <ul>
-          <li class="pv2"><a class="dib color-inherit" href="posts/first-post.html">First Post</a></li>
-          <li class="pv2"><a class="dib color-inherit" href="posts/second-post.html">Second Post</a></li>
+          <li class="pv2"><a class="dib color-inherit underline-offset decoration-thickness" href="posts/first-post.html">First Post</a></li>
+          <li class="pv2"><a class="dib color-inherit underline-offset decoration-thickness" href="posts/second-post.html">Second Post</a></li>
         </ul>
       </section>
     </main>

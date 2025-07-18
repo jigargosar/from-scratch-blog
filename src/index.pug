@@ -1,8 +1,16 @@
 extends layout.pug
 
 block content
+  style.
+    .underline-offset {
+      text-underline-offset:0.2em;
+    }
+
+    .decoration-thickness{
+      text-decoration-thickness:0.01em;
+    }
   section#posts
     ul
       each post in posts
         li.pv2
-          a.dib.color-inherit(href=post.url) #{post.title}
+          a.dib.color-inherit.underline-offset.decoration-thickness(href=post.url) #{post.title}
