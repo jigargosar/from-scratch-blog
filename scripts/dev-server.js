@@ -65,15 +65,17 @@ const NOT_FOUND_HTML = `
   <html lang="en">
     <head>
       <meta charset="UTF-8" />
-      <title>404 Not Found</title>
+      <title>Site Error</title>
       <style>
         body { font-family: sans-serif; background: #222; color: #eee; text-align: center; padding: 4rem; }
         h1 { color: #ff4081; }
+        a { color: #00ffe1; text-decoration: underline; }
       </style>
     </head>
     <body>
-      <h1>404 - Page Not Found</h1>
-      <p>The page you requested does not exist.</p>
+      <h1>Something Went Wrong</h1>
+      <p>The page or resource you requested could not be found, or there was a problem with the server.<br>
+      Please check the URL or <a href="/">return to the homepage</a>.</p>
     </body>
   </html>
 `
