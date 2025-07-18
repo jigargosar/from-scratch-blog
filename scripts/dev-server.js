@@ -1,4 +1,3 @@
-// server.js
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
@@ -84,7 +83,6 @@ watcher({
   paths: SRC_DIR,
   delay: 500,
 
-  // your real build command
   exec: () =>
     new Promise((resolve, reject) => {
       console.log('▶️  Running build…')
