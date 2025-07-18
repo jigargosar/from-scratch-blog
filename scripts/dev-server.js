@@ -36,24 +36,47 @@ function injectReloadScript(html) {
   return html.replace(/<\/body>/i, snippet + '</body>')
 }
 
+
 app.use((req, res, next) => {
-  let reqPath = req.path === '/' ? '/index.html' : req.path
-  let filePath = path.join(DOCS_DIR, reqPath)
+  let reqPath = req.path === '/' ? '/index.html' : req.path;
+  let filePath = path.join(DOCS_DIR, reqPath);
 
   if (!path.extname(filePath)) {
-    const htmlPath = filePath + '.html'
-    if (fs.existsSync(htmlPath)) filePath = htmlPath
+    const htmlPath = filePath + '.html';
+    if (fs.existsSync(htmlPath)) filePath = htmlPath;
   }
 
-  if (fs.existsSync(filePath) && filePath.endsWith('.html')) {
-    fs.promises
-      .readFile(filePath, 'utf8')
-      .then(html => res.send(injectReloadScript(html)))
-      .catch(next)
+  if (fs.existsSync(filePath)) {
+    if (filePath.endsWith('.html')) {
+      fs.promises
+        .readFile(filePath, 'utf8')
+        .then(html => res.send(injectReloadScript(html)))
+        .catch(next);
+    } else {
+      res.sendFile(filePath);
+    }
   } else {
-    express.static(DOCS_DIR)(req, res, next)
+    res.status(404).send(injectReloadScript(NOT_FOUND_HTML));
   }
 })
+
+const NOT_FOUND_HTML = `
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <title>404 Not Found</title>
+      <style>
+        body { font-family: sans-serif; background: #222; color: #eee; text-align: center; padding: 4rem; }
+        h1 { color: #ff4081; }
+      </style>
+    </head>
+    <body>
+      <h1>404 - Page Not Found</h1>
+      <p>The page you requested does not exist.</p>
+    </body>
+  </html>
+`
 
 watcher({
   paths: SRC_DIR,
