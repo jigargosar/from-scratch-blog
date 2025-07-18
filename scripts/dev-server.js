@@ -5,6 +5,10 @@ const fs = require('fs')
 const { spawn } = require('child_process')
 const watcher = require('./watcher')
 const open = require('open').default
+const notifier = require('node-notifier');
+
+
+
 const app = express()
 const PORT = 3000
 const DOCS_DIR = path.join(__dirname, '../docs')
@@ -12,7 +16,6 @@ const SRC_DIR = path.join(__dirname, '../src')
 
 let clients = []
 
-// 1. SSE reload endpoint
 app.get('/reload', (req, res) => {
   res.setHeader('Content-Type', 'text/event-stream')
   res.setHeader('Cache-Control', 'no-cache')
@@ -25,7 +28,6 @@ app.get('/reload', (req, res) => {
   })
 })
 
-// 2. HTML injector + static server (unchanged)
 function injectReloadScript(html) {
   const snippet = `
 <script>
@@ -54,7 +56,6 @@ app.use((req, res, next) => {
   }
 })
 
-// 3. Centralized watcher + builder
 watcher({
   paths: SRC_DIR,
   delay: 500,
@@ -63,23 +64,29 @@ watcher({
   exec: () =>
     new Promise((resolve, reject) => {
       console.log('▶️  Running build…')
-      const p = spawn('node', [path.join(__dirname, 'build.js')], {
+      const p = spawn('node', [path.join(__dirname, 'build.j')], {
         stdio: 'inherit',
       })
-      p.on('close', code => (code === 0 ? resolve() : reject(code)))
+      p.on('close', function (code) {
+        if (code === 0) {
+          return resolve()
+        } else {
+          const message = 'Build Failed: ' + code
+          console.error(message)
+          notifier.notify(message);
+          return reject(code)
+        }
+      })
     }),
 
-  // fire an SSE reload on every build completion
   afterExec: () => {
     console.log('🔄 Builds done — reloading clients')
     clients.forEach(res => res.write('data: reload\n\n'))
   },
 })
 
-// 4. Start server
 app.listen(PORT, () => {
   const url = `http://localhost:${PORT}`
   console.log(`Dev server running at ${url}`)
   console.log(open(url))
-
 })
