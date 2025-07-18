@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const { spawn } = require('child_process')
 const watcher = require('./watcher')
-
+const open = require('open').default
 const app = express()
 const PORT = 3000
 const DOCS_DIR = path.join(__dirname, '../docs')
@@ -78,5 +78,8 @@ watcher({
 
 // 4. Start server
 app.listen(PORT, () => {
-  console.log(`Dev server running at http://localhost:${PORT}`)
+  const url = `http://localhost:${PORT}`
+  console.log(`Dev server running at ${url}`)
+  console.log(open(url))
+
 })
