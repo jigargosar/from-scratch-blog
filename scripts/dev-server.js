@@ -4,7 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const { spawn } = require('child_process')
 const watcher = require('./watcher')
-const open = require('open').default
+// const open = require('open').default
 const notifier = require('node-notifier')
 const clipboard = require('clipboardy').default
 
